@@ -1,0 +1,39 @@
+{
+  "name": "botkit-storage-bigtable",
+  "version": "1.0.0",
+  "description": "Google Cloud Bigtable driver for Botkit",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "jscs ./",
+    "test": "istanbul cover --report lcov --dir coverage/ _mocha ./tests --grep ./tests/*.js -- --colors"
+  },
+  "keywords": [
+    "botkit",
+    "bigtable",
+    "google cloud bigtable"
+  ],
+  "author": "Simon Morley | Pickl Networks",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pickl-networks/botkit-storage-bigtable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bigtable/botkit-storage-bigtable/issues"
+  },
+  "dependencies": {
+    "@google-cloud/bigtable": "^0.10.0",
+    "@google-cloud/debug-agent": "^2.0.0",
+    "q": "^1.5.0"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.9",
+    "istanbul": "^0.4.1",
+    "jscs": "^2.8.0",
+    "mocha": "^2.3.4",
+    "proxyquire": "^1.7.3",
+    "should": "^8.0.2",
+    "should-sinon": "0.0.3",
+    "sinon": "^1.17.2"
+  }
+}
