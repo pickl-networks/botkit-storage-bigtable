@@ -82,6 +82,7 @@ function get(table, family, column) {
   };
 
   var get = function(id, cb) {
+    id = id.split('').reverse().join('');
     getRow(table, id).then(function(data) {
       cb(data, null);
     }, function() {
@@ -103,18 +104,23 @@ function get(table, family, column) {
 function save(table, family, column) {
     return function(data, cb) {
 
-      var r = {};
-      r.key = data.id;
-      r.data = {};
-      r.data[family] = {};
-      r.data[family][column] = JSON.stringify(data);
+      if (data.id) {
 
-      // Needs error handling !!!!! //
-      table.insert([r], function(err) {
-        if (err) {
-          console.log(err);
-        }
-      });
+        // Reverse the key so we don't get hotspots
+        var r = {};
+        r.key = data.id.split('').reverse().join('');
+
+        r.data = {};
+        r.data[family] = {};
+        r.data[family][column] = JSON.stringify(data);
+
+        // Needs error handling !!!!! //
+        table.insert([r], function(err) {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
     };
 }
 
@@ -128,6 +134,7 @@ function save(table, family, column) {
  */
 function remove(table, family, column) {
     return function(id, cb) {
+      id = id.split('').reverse().join('');
       var row = table.row(id);
       row.delete(function(err, apiResponse) {});
     };
@@ -159,8 +166,6 @@ function all(table, cf, column) {
 
     var result = [];
     table.getRows(opts).then(function(data) {
-      console.log(11111111111111111111, data);
-
       for (var i = 0, len = data[0].length; i < len; i++) {
         result.push(JSON.parse(data[0][i].data[family][column][0].value));
       }
