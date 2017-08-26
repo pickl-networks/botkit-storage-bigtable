@@ -26,7 +26,7 @@ module.exports = function(config) {
   }
 
   bigtable = require('@google-cloud/bigtable')({
-    projectId: config.projectID,
+    projectId: config.projectId,
   });
 
   var instance = bigtable.instance(config.instance);
@@ -159,6 +159,8 @@ function all(table, cf, column) {
 
     var result = [];
     table.getRows(opts).then(function(data) {
+      console.log(11111111111111111111, data);
+
       for (var i = 0, len = data[0].length; i < len; i++) {
         result.push(JSON.parse(data[0][i].data[family][column][0].value));
       }
