@@ -70,23 +70,22 @@ function get(table, family, column) {
     var deferred = Q.defer();
 
     var row = table.row(id);
-    row.get(id, function(err, data) {
-      if (err) {
-        deferred.reject();
-      } else {
-        deferred.resolve(JSON.parse(data.data[family][column][0].value));
+
+    var team;
+    row.get([], function(err, data) {
+      if (!err) {
+        team = JSON.parse(data.data[family][column][0].value);
       }
+      deferred.resolve(team);
     });
 
     return deferred.promise;
   };
 
   var get = function(id, cb) {
-    id = id.split('').reverse().join('');
-    getRow(table, id).then(function(data) {
-      cb(data, null);
-    }, function() {
-      cb(null, null);
+    team = id.split('').reverse().join('');
+    getRow(table, team).then(function(entity) {
+      cb(null, entity ? entity : null);
     });
   };
 
