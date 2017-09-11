@@ -66,6 +66,8 @@ module.exports = function(config) {
  */
 function get(table, family, column) {
 
+  console.log('1111-------------------------------')
+
   var getRow = function(table, id) {
     var deferred = Q.defer();
 
@@ -86,6 +88,8 @@ function get(table, family, column) {
     team = id.split('').reverse().join('');
     getRow(table, team).then(function(entity) {
       cb(null, entity ? entity : null);
+    }).catch((err) => {
+      console.error('ERROR:', err);
     });
   };
 
@@ -104,7 +108,6 @@ function save(table, family, column) {
     return function(data, cb) {
 
       if (data.id) {
-
         // Reverse the key so we don't get hotspots
         var r = {};
         r.key = data.id.split('').reverse().join('');
@@ -118,6 +121,7 @@ function save(table, family, column) {
           if (err) {
             console.log(err);
           }
+          cb(null, null);
         });
       }
     };
@@ -144,6 +148,7 @@ function remove(table, family, column) {
  */
 function all(table, cf, column) {
 
+  console.log('1111-------------------------------')
   var getRows = function(table, family, column) {
     var deferred = Q.defer();
 
@@ -172,6 +177,8 @@ function all(table, cf, column) {
       if (result.length === data[0].length) {
         deferred.resolve(result);
       }
+    }).catch((err) => {
+      console.error('ERROR:', err);
     });
     return deferred.promise;
   };
@@ -181,6 +188,8 @@ function all(table, cf, column) {
       cb(null, data);
     }, function() {
       cb(null, null);
+    }).catch((err) => {
+      console.error('ERROR:', err);
     });
 
   };
