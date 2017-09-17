@@ -148,14 +148,13 @@ function remove(table, family, column) {
  */
 function all(table, cf, column) {
 
-  console.log('1111-------------------------------')
   var getRows = function(table, family, column) {
     var deferred = Q.defer();
 
     var filter = [
       {
         column: {
-          family: column,
+          name: column,
           cellLimit: 1
         }
       },
